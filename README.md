@@ -20,3 +20,7 @@ socketProcessor.onTapEventReceived = { (response) -> Void  in
    print("Response from socket server in iOS \(data)")
 }
 ```
+
+
+https://user-images.githubusercontent.com/7534778/156894143-cfd03e97-0329-476c-bea9-d3563bbf40f9.mp4
+
