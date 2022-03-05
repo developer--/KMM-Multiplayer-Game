@@ -60,7 +60,7 @@ class SocketEventsProcessor {
     on(Events.Response.ON_CAR_POSITION_PROCESSED.eventName) { data ->
       onCarPositionReceived?.invoke(data)
     }
-    on(Events.Response.PLAYERS_READY.eventName) { _ ->
+    on(Events.Response.PLAYERS_READY.eventName) { data ->
       onPlayersReady?.invoke()
     }
   }
