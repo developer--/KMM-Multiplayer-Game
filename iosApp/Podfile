@@ -1,0 +1,14 @@
+# ignore all warnings from all pods
+source 'https://cdn.cocoapods.org/'
+# inhibit_all_warnings!
+# install! 'cocoapods', :disable_input_output_paths => true
+install! 'cocoapods', :disable_input_output_paths => true
+
+target 'iosApp' do
+  use_frameworks!
+  platform :ios, '14.1'
+  pod 'shared', :path => '../shared'
+#   pod 'mokoSocketIo', :path => '../'
+  pod 'mokoSocketIo', :git => 'https://github.com/icerockdev/moko-socket-io.git', :tag => 'release/0.3.0'
+
+end

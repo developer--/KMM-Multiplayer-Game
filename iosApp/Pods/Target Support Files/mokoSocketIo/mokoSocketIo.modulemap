@@ -1,0 +1,6 @@
+framework module mokoSocketIo {
+  umbrella header "mokoSocketIo-umbrella.h"
+
+  export *
+  module * { export * }
+}
