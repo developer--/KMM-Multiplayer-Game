@@ -24,3 +24,8 @@ socketProcessor.onTapEventReceived = { (response) -> Void  in
 
 https://user-images.githubusercontent.com/7534778/156894143-cfd03e97-0329-476c-bea9-d3563bbf40f9.mp4
 
+Todo
+- Display winner in Rally mode
+- Radnomize stone falls in Crash Out mode
+- Make UI for iOS
+- etc
