@@ -1,6 +1,6 @@
 # KMM-Multiplayer-Game
 
-Sample usage is pretty simmilar:
+Sample usage is pretty similar:
 
 In Android
 ```Kotlin
