@@ -1,7 +1,11 @@
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    kotlin("plugin.serialization")
     id("com.android.library")
+    id("dev.icerock.mobile.multiplatform.cocoapods")
+    id("dev.icerock.mobile.multiplatform.android-manifest")
+    id("dev.icerock.mobile.multiplatform.ios-framework")
 }
 
 version = "1.0"
@@ -27,7 +31,10 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("dev.icerock.moko:socket-io:0.3.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+                api("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.0")
+                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+
             }
         }
         val commonTest by getting {

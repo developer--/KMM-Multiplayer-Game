@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".MainActivity">
+    tools:context=".CarCrashActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivRoad1"
@@ -13,7 +13,6 @@
         android:layout_height="0dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,9 +25,21 @@
         android:layout_height="0dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_road"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivRoad3"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_road"
         tools:visibility="visible" />
@@ -40,7 +51,8 @@
         android:layout_height="100dp"
         android:src="@drawable/car_yellow"
         android:transitionName="ivPlayer1"
-        app:layout_constraintBottom_toTopOf="@id/btnTap"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/ivRoad1"
         app:layout_constraintStart_toStartOf="@id/ivRoad1" />
 
@@ -48,39 +60,46 @@
         android:id="@+id/ivPlayer2"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:layout_constraintStart_toStartOf="@id/ivRoad2"
         android:src="@drawable/red_car"
         android:transitionName="ivPlayer2"
-        app:layout_constraintBottom_toTopOf="@id/btnTap"
-        app:layout_constraintEnd_toEndOf="@id/ivRoad2" />
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ivRoad2"
+        app:layout_constraintStart_toStartOf="@id/ivRoad2" />
 
     <TextView
         android:id="@+id/tvTimer"
-        android:visibility="invisible"
-        tools:visibility="visible"
-        android:text="3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/timer_drawable"
         android:gravity="center"
+        android:text="3"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/timer_drawable"
-        android:layout_width="50dp"
-        android:layout_height="50dp"/>
+        tools:visibility="visible" />
 
-    <Button
-        android:id="@+id/btnTap"
-        android:enabled="false"
-        android:layout_width="200dp"
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivStone1"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"
+        android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="20dp"
-        android:text="Tap Tap ..."
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:src="@drawable/stone_1"
+        app:layout_constraintEnd_toEndOf="@id/ivPlayer1"
+        app:layout_constraintStart_toStartOf="@id/ivPlayer1" />
+
+    <FrameLayout
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

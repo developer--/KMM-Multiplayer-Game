@@ -18,6 +18,7 @@ class SocketEventsProcessor {
     )
   ) {
     on(SocketEvent.Connect) {
+      onConnect?.invoke()
       println("__SOCKET___ connect")
     }
 
@@ -31,7 +32,7 @@ class SocketEventsProcessor {
 
     on(SocketEvent.Error) {
       println("__SOCKET___ error ${(it as Exception).stackTraceToString()}")
-      (it as Exception).printStackTrace()
+      it.printStackTrace()
     }
 
     on(SocketEvent.Reconnect) {
@@ -50,13 +51,25 @@ class SocketEventsProcessor {
       println("__SOCKET___ pong")
     }
 
+    on(Events.Response.PLAYER_SELECTED.eventName) { data ->
+      onPlayerSelected?.invoke(data)
+    }
     on(Events.Response.ON_PLAYER_TAP_PROCESSED.eventName) { data ->
       onTapEventReceived?.invoke(data)
-      println("__SOCKET___ response __ $data")
+    }
+    on(Events.Response.ON_CAR_POSITION_PROCESSED.eventName) { data ->
+      onCarPositionReceived?.invoke(data)
+    }
+    on(Events.Response.PLAYERS_READY.eventName) { _ ->
+      onPlayersReady?.invoke()
     }
   }
 
+  var onConnect: (() -> Unit)? = null
   var onTapEventReceived: ((String) -> Unit)? = null
+  var onCarPositionReceived: ((String) -> Unit)? = null
+  var onPlayerSelected: ((String) -> Unit)? = null
+  var onPlayersReady:(() -> Unit)? = null
 
   fun connect() {
     socket.connect()
