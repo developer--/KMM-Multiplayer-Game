@@ -2,6 +2,7 @@ package ge.dev.waroffingerskmm.android
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.os.Build
 import android.provider.Settings
 import android.view.WindowInsets
@@ -28,7 +29,7 @@ fun Activity.fullscreen() {
 }
 
 @SuppressLint("HardwareIds")
-fun Activity.getDeviceId(): String {
+fun Context.getDeviceId(): String {
   return Settings.Secure.getString(
     contentResolver,
     Settings.Secure.ANDROID_ID
