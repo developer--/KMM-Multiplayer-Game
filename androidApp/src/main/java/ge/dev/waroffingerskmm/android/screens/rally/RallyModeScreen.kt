@@ -1,31 +1,20 @@
 package ge.dev.waroffingerskmm.android.screens.rally
 
-import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.ConstraintLayoutBaseScope
-import androidx.constraintlayout.compose.ConstraintLayoutScope
 import ge.dev.waroffingerskmm.android.R
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
-import androidx.compose.runtime.getValue
 
 /**
  * @Author: Jemo Mgebrishvili

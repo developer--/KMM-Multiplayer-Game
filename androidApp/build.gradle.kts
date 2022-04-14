@@ -43,6 +43,7 @@ dependencies {
   // Navigation
   implementation("androidx.navigation:navigation-compose:2.4.1")
   implementation("androidx.compose.ui:ui:1.1.1")
+  implementation("androidx.compose.ui:ui-util:1.2.0-alpha05")
   // Tooling support (Previews, etc.)
   implementation("androidx.compose.ui:ui-tooling:1.1.1")
   // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
