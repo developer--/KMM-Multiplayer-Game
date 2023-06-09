@@ -109,46 +109,40 @@ class CarCrashActivity : AppCompatActivity() {
   }
 
   private fun animatePositionChange(carPos: CarPosition) {
-    val isPlayer_1 = carPos.playerId == PlayerConstants.PLAYER_1_ID
-    val targetView = if (carPos.playerId == PlayerConstants.PLAYER_1_ID) imgCar1 else imgCar2
+    val isPlayer1 = carPos.playerId == PlayerConstants.PLAYER_1_ID
+    val targetView = if (isPlayer1) imgCar1 else imgCar2
     val position = PositionsEnum.values().find { it.pos == carPos.position } ?: return
 
     runOnUiThread {
-      when (position) {
-        PositionsEnum.CENTER,
-        PositionsEnum.LEFT -> {
-          val leftMargin = if(isPlayer_1) targetView.left else targetView.right
-          val imgWidth = targetView.width
-          val centerX = screenWidth / 2
-          val leftOffsetX = centerX - leftMargin - (imgWidth / 2)
+      val leftMargin = if (isPlayer1) targetView.left else targetView.right
+      val imgWidth = targetView.width
+      val centerX = screenWidth / 2
+      val leftOffsetX = centerX - leftMargin - (imgWidth / 2)
 
-          val finalTranslationX =
-            if (targetView.translationX == leftOffsetX.toFloat() && targetView.translationX != 0f) {
-              0
-            } else {
-              leftOffsetX
-            }
+      when (position) {
+        PositionsEnum.CENTER -> {
+          val finalTranslationX = if (targetView.translationX != 0f) {
+            0
+          } else { leftOffsetX }
+          targetView.animate()
+            .translationX(finalTranslationX.toFloat())
+            .start()
+        }
+        PositionsEnum.LEFT -> {
+          val finalTranslationX = if (targetView.translationX != leftOffsetX.toFloat()) {
+            leftOffsetX
+          } else { 0 }
           targetView.animate()
             .translationX(finalTranslationX.toFloat())
             .start()
         }
         PositionsEnum.RIGHT -> {
-          val leftMargin = if(isPlayer_1) targetView.left else targetView.right
-          val imgWidth = targetView.width
-          val centerX = screenWidth / 2
-          val leftOffsetX = centerX - leftMargin - (imgWidth / 2)
-
-          val rightCenterX = screenWidth - leftMargin * 2
-
-          val finalTranslationX =
-            if (targetView.translationX == leftOffsetX.toFloat() && targetView.translationX != 0f) {
-              rightCenterX - imgWidth
-            } else {
-              leftOffsetX
-            }
-
+          val rightOffsetX = screenWidth - leftMargin - (imgWidth / 2) - imgWidth
+          val finalTranslationX = if (targetView.translationX != rightOffsetX.toFloat()) {
+            rightOffsetX
+          } else { 0 }
           targetView.animate()
-            .translationX((finalTranslationX).toFloat())
+            .translationX(finalTranslationX.toFloat())
             .start()
         }
       }
