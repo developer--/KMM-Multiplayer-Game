@@ -43,7 +43,7 @@ class CarCrashActivity : AppCompatActivity() {
       stoneTimer?.schedule(object : TimerTask() {
         override fun run() {
           val isFirstPlayer = selectedPlayerId == PlayerConstants.PLAYER_1_ID
-          val road = getRandomRoad(isFirstPlayer)
+          val road = getRandomRoad()
           runOnUiThread { generateStone(road, roadWidth) }
         }
       }, 0, 4000)
@@ -82,8 +82,8 @@ class CarCrashActivity : AppCompatActivity() {
     onPositionChanged()
   }
 
-  private fun getRandomRoad(isFirstPlayer: Boolean): Int {
-    return if (isFirstPlayer) (1..2).random() else (2..3).random()
+  private fun getRandomRoad(): Int {
+    return (1..3).random()
   }
 
   private fun sendChanged(playerId: Int, position: PositionsEnum) {
