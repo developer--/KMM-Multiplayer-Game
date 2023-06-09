@@ -1,8 +1,8 @@
 package ge.dev.waroffingerskmm.android
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import ge.dev.waroffingerskmm.android.view.OnSwipeTouchListener
 import ge.dev.waroffingerskmm.model.CarPosition
@@ -12,6 +12,7 @@ import ge.dev.waroffingerskmm.socket.SocketEventsProcessor
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.util.*
 
 class CarCrashActivity : AppCompatActivity() {
 
@@ -21,32 +22,31 @@ class CarCrashActivity : AppCompatActivity() {
   private lateinit var imgCar1: View
   private lateinit var imgCar2: View
   private var screenWidth: Int = 0
+  private var stoneTimer: Timer? = null
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_car_crash)
     selectedPlayerId = intent.getIntExtra("SELECTED_PLAYER_ID", PlayerConstants.PLAYER_1_ID)
     fullscreen()
 
-    val stoneImg = findViewById<View>(R.id.ivStone1)
-
-    imgCar1 = findViewById<View>(R.id.ivPlayer1)
-    imgCar2 = findViewById<View>(R.id.ivPlayer2)
+    imgCar1 = findViewById(R.id.ivPlayer1)
+    imgCar2 = findViewById(R.id.ivPlayer2)
 
     socketProcessor.connect()
 
     imgCar1.post {
       screenWidth = window.decorView.display?.width ?: return@post
+      val roadWidth = screenWidth / 3
 
-      stoneImg.postDelayed({
-        stoneImg.animate().translationY(-1f * stoneImg.height)
-          .withEndAction {
-            stoneImg.isVisible = true
-            stoneImg.animate()
-              .setDuration(3500L)
-              .translationY(window.decorView.display?.height?.toFloat() ?: 0f + stoneImg.height * 5)
-          }
-          .start()
-      }, 300)
+      stoneTimer = Timer()
+      stoneTimer?.schedule(object : TimerTask() {
+        override fun run() {
+          val isFirstPlayer = selectedPlayerId == PlayerConstants.PLAYER_1_ID
+          val road = getRandomRoad(isFirstPlayer)
+          runOnUiThread { generateStone(road, roadWidth) }
+        }
+      }, 0, 4000)
 
       val isFirstPlayer = selectedPlayerId == PlayerConstants.PLAYER_1_ID
       val targetCar = if (isFirstPlayer) imgCar1 else imgCar2
@@ -82,7 +82,11 @@ class CarCrashActivity : AppCompatActivity() {
     onPositionChanged()
   }
 
-  fun sendChanged(playerId: Int, position: PositionsEnum) {
+  private fun getRandomRoad(isFirstPlayer: Boolean): Int {
+    return if (isFirstPlayer) (1..2).random() else (2..3).random()
+  }
+
+  private fun sendChanged(playerId: Int, position: PositionsEnum) {
     val data = Json.encodeToString(CarPosition(playerId, position.pos))
     socketProcessor.sendData(Events.Request.ON_CAR_POSITION_CHANGED, data)
   }
@@ -92,6 +96,16 @@ class CarCrashActivity : AppCompatActivity() {
       val carPos: CarPosition = Json.decodeFromString(it)
       animatePositionChange(carPos)
     }
+  }
+
+  private fun generateStone(road: Int, roadWidth: Int) {
+    val stoneImg = findViewById<View>(R.id.ivStone1)
+    stoneImg.translationX = (road - 1) * roadWidth.toFloat()
+    stoneImg.translationY = -1f * stoneImg.height
+    stoneImg.isVisible = true
+    stoneImg.animate()
+      .setDuration(3500L)
+      .translationY(window.decorView.display?.height?.toFloat() ?: (0f + stoneImg.height * 5))
   }
 
   private fun animatePositionChange(carPos: CarPosition) {
@@ -139,5 +153,11 @@ class CarCrashActivity : AppCompatActivity() {
         }
       }
     }
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    stoneTimer?.cancel()
+    stoneTimer = null
   }
 }
