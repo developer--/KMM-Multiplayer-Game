@@ -11,7 +11,7 @@ import dev.icerock.moko.socket.SocketOptions
 
 class SocketEventsProcessor {
   private val socket = Socket(
-    endpoint = "http://192.168.0.102:9092",
+    endpoint = "http://192.168.0.101:9092",
     config = SocketOptions(
       queryParams = null,
       transport = SocketOptions.Transport.WEBSOCKET
